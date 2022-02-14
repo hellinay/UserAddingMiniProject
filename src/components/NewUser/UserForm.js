@@ -2,6 +2,8 @@ import { logRoles } from "@testing-library/react";
 import React, { useState } from "react";
 import "./UserForm.css";
 import ErrorModalComp from "./ErrorModal";
+import Button from "../UI/Button";
+
 
 function UserForm(params) {
   const [enteredName, setEnteredName] = useState("");
@@ -20,16 +22,20 @@ function UserForm(params) {
     console.log(enteredName, enteredAge);
     event.preventDefault();
 
-    if (enteredName.trim().length === 0 || enteredAge.trim().length === 0)
+    if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
       setError({
         title: "Invalid input",
-        msg: "Do not leave blank spaces",
+        msg: "Please enter a valid name and age (non-empty values).",
       });
-    if (enteredAge < 1)
+      return;
+    }
+    if (+enteredAge < 1) {
       setError({
         title: "Invalid age",
-        msg: "Age should be > 0",
+        msg: "Please enter a valid age (> 0).",
       });
+      return;
+    }
 
     const UserData = {
       name: enteredName,
@@ -37,19 +43,23 @@ function UserForm(params) {
     };
 
     params.onSaveUserData(UserData);
-    //console.log(ExpenseData)
+    console.log(UserData)
     setEnteredAge("");
     setEnteredName("");
   }
 
   function errorHandler(params) {
-    setError(null)
+    setError(null);
   }
 
-  console.log(enteredAge, enteredName);
-  return (
-    <div>
-      { error && <ErrorModalComp title={error.title} msg={error.msg} onConfirm={errorHandler}/>}
+  return ( <div>
+      {error && (
+        <ErrorModalComp
+          title={error.title}
+          msg={error.msg}
+          onConfirm={errorHandler}
+        />
+      )}
       <form>
         <div>
           <div>
@@ -76,7 +86,7 @@ function UserForm(params) {
               ></input>
             </div>
           </div>
-          <button onClick={addFormHandler}>Add User </button>
+          <Button onClick={addFormHandler}>Add User </Button>
         </div>
       </form>
     </div>

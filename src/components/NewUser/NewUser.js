@@ -12,7 +12,7 @@ function NewUser(params) {
       id: Math.random().toString(),
     };
 
-    if(userData.name && userData.age !=null){
+    if (userData.name || userData.age === null){
     params.onAddUser(userData.name, userData.age);
     }
     console.log(userData, "newuser");

@@ -15,10 +15,10 @@ function addUserHandler(uName,uAge) {
 
 
   return (
-    <div>
+    <>
       <NewUser onAddUser={addUserHandler} ></NewUser>
       <UserList user={userList}></UserList>    
-      </div>
+      </>
   );
 }
 
